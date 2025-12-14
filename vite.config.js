@@ -3,5 +3,5 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/modern-todo-app/'
+  base: '/modern-todo-app/',   // ← リポジトリ名に合わせる
 })
