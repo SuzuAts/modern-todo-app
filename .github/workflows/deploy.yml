@@ -1,0 +1,32 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]   # main ブランチに push されたら実行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # ソースコードをチェックアウト
+      - uses: actions/checkout@v3
+        with:
+          submodules: false   # ← サブモジュールを探さないようにする
+
+      # Node.js をセットアップ
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # 依存関係をインストール
+      - run: npm ci
+
+      # ビルドを実行
+      - run: npm run build
+
+      # dist フォルダを GitHub Pages にデプロイ
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
